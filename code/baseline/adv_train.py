@@ -114,7 +114,7 @@ def salience_val_one_epoch(net_f, net, optimizer, batch_generator, criterion, Sa
 
 def adversairal_train_one_epoch(net, optimizer, batch_generator, criterion,
                                 AttackMethod, clock, attack_freq = 1, use_adv = True,
-                                DEVICE=torch.device('cuda:0')):
+                                DEVICE=torch.device('cuda:0'), act_loss_coef = 0):
     """
     adversarial training.
     :param net:
@@ -180,8 +180,9 @@ def adversairal_train_one_epoch(net, optimizer, batch_generator, criterion,
             optimizer.zero_grad()
             #print("Clean ", torch.mean(data).item())
 
-            pred = net(data)
-            loss = criterion(pred, label)
+            pred, act_loss = net(data, if_return_activation=True)
+            loss = criterion(pred, label) + act_loss_coef * act_loss
+            print(loss, act_loss)
             loss.backward()
             optimizer.step()
             acc = torch_accuracy(pred, label, (1, ))

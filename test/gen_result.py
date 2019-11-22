@@ -11,7 +11,7 @@ import torch.nn as nn
 from dataset import create_test_dataset, create_train_dataset, \
     create_saturation_test_dataset, create_edge_test_dataset, \
     create_style_test_dataset, create_brighness_test_dataset, create_patch_test_dataset
-import torchvision.models as models
+import models
 import skimage.io as io
 from attack import IPGD
 def GetSmoothRes(net, Data, DEVICE, save_path ='./SmoothRes/Fashion_MNIST'):
@@ -255,7 +255,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--resume', type = str,
-                        default='../exps/tradeoff.eps8/checkpoint.pth.tar')
+                        default='../../exps/baseline/checkpoint.pth.tar')
     parser.add_argument('-d', type = int, default=0)
     args = parser.parse_args()
 

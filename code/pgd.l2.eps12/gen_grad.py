@@ -9,7 +9,7 @@ from utils import get_a_set
 import torch.nn.functional as F
 import torch.nn as nn
 from dataset import create_test_dataset, create_train_dataset
-import torchvision.models as models
+import models
 import skimage.io as io
 def GetSmoothRes(net, Data, DEVICE, save_path ='./SmoothRes/Fashion_MNIST'):
     for i, (img, label) in enumerate(zip(Data.X, Data.Y)):

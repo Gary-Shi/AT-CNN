@@ -15,7 +15,7 @@ import torch.nn as nn
 import os
 from adv_train import adversairal_train_one_epoch, adversarial_val
 from collections import OrderedDict
-import torchvision.models as models
+import models
 from adv_test import evalRoboustness2 as evalRoboustness
 parser = argparse.ArgumentParser()
 parser.add_argument('--weight_decay', default=5e-4, type = float, help='weight decay (default: 5e-4)')
@@ -33,7 +33,7 @@ parser.add_argument('--no_adv', action = 'store_true', default=False, help = 'if
 parser.add_argument('--adv_freq', type = int, default=1, help = 'The frequencies of training one batch of adversarial examples')
 parser.add_argument('--eps', default=12.0, type = int, help = 'the maximum boundary of adversarial perturbations')
 parser.add_argument('--iter', default=20, type = int, help = 'the number of iterations take to generate adversarial examples for using IPGD')
-parser.add_argument('-d', type = int, default=5, help = 'Which gpu to use')
+parser.add_argument('-d', type = int, default=0, help = 'Which gpu to use')
 #parser.add_argument('--wide', default = 2, type = int, help = 'using wider resnet18')
 args = parser.parse_args()
 
@@ -112,7 +112,7 @@ while True:
     with open(train_res_path, 'a') as f:
         json.dump(Trainresults, f)
 
-    torch.cuda.empty_cache()
+    # torch.cuda.empty_cache()
 
     #val_epoch = next(ds_val.epoch_generator())
     Valresults = adversarial_val(net, ds_val, criterion, PgdAttack, clock,

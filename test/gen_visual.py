@@ -11,7 +11,7 @@ import torch.nn as nn
 from dataset import create_test_dataset, create_train_dataset, \
     create_saturation_test_dataset, create_edge_test_dataset, \
     create_style_test_dataset, create_brighness_test_dataset, create_patch_test_dataset
-import torchvision.models as models
+import models
 import skimage.io as io
 from skimage import transform
 from attack import IPGD

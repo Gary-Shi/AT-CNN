@@ -110,7 +110,7 @@ class SpatialTransformedAttack(nn.Module):
         return adv_inp
 
 def test():
-    import torchvision.models as models
+    import models
     DEVICE = torch.device('cuda:{}'.format(0))
 
     net = models.resnet18(pretrained=False)

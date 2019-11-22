@@ -15,7 +15,7 @@ import torch.nn as nn
 import os
 from adv_train import adversairal_train_one_epoch, adversarial_val
 from collections import OrderedDict
-import torchvision.models as models
+import models
 from adv_test import evalRoboustness2 as evalRoboustness
 parser = argparse.ArgumentParser()
 parser.add_argument('--weight_decay', default=5e-4, type = float, help='weight decay (default: 5e-4)')
@@ -33,7 +33,8 @@ parser.add_argument('--no_adv', action = 'store_true', default=True, help = 'if 
 parser.add_argument('--adv_freq', type = int, default=1, help = 'The frequencies of training one batch of adversarial examples')
 parser.add_argument('--eps', default=8, type = int, help = 'the maximum boundary of adversarial perturbations')
 parser.add_argument('--iter', default=20, type = int, help = 'the number of iterations take to generate adversarial examples for using IPGD')
-parser.add_argument('-d', type = int, default=1, help = 'Which gpu to use')
+parser.add_argument('-d', type = int, default=0, help = 'Which gpu to use')
+parser.add_argument('--act_loss', default=0, type=float, help='coefficient of activation loss')
 #parser.add_argument('--wide', default = 2, type = int, help = 'using wider resnet18')
 args = parser.parse_args()
 
@@ -109,7 +110,7 @@ while True:
 
     Trainresults = adversairal_train_one_epoch(net, optimizer, ds_train, criterion, PgdAttack, clock,
                                                attack_freq = args.adv_freq, use_adv = not args.no_adv,
-                                               DEVICE = DEVICE)
+                                               DEVICE = DEVICE, act_loss_coef = args.act_loss)
     Trainresults['epoch'] = clock.epoch
     with open(train_res_path, 'a') as f:
         json.dump(Trainresults, f)
@@ -121,7 +122,7 @@ while True:
                                  attack_freq = args.adv_freq * 5,
                                  DEVICE = DEVICE)
     Valresults['epoch'] = clock.epoch
-    torch.cuda.empty_cache()
+    # torch.cuda.empty_cache()
     with open(val_res_path, 'a') as f:
         f.write('\n')
         json.dump(Valresults, f)

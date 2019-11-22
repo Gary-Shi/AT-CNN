@@ -10,7 +10,7 @@ from utils import get_a_set
 import torch.nn.functional as F
 import torch.nn as nn
 
-import torchvision.models as models
+import models
 import skimage.io as io
 from skimage import transform
 from torchvision import transforms

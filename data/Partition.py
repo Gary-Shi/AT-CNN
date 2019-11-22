@@ -6,7 +6,8 @@ def partition_one_class(class_name, ratio):
     class_dir = os.path.join('256_ObjectCategories', class_name)
     img_names = os.listdir(class_dir)
 
-    target_dir = os.path.join('./val', class_name)
+    target_dir = os.path.join('./val/', class_name)
+    print(target_dir)
     if not os.path.exists(target_dir):
         os.mkdir(target_dir)
 
@@ -22,6 +23,7 @@ def partition_one_class(class_name, ratio):
 
 def PartitionValidation(ratio = 0.2):
     all_class = os.listdir('./256_ObjectCategories')
+    print(all_class)
 
     for class_name in all_class:
         print('Working on {}'.format(class_name))

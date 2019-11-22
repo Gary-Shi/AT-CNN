@@ -15,7 +15,7 @@ import torch.nn as nn
 import os
 from adv_train import adversairal_train_one_epoch, adversarial_val
 from collections import OrderedDict
-import torchvision.models as models
+import models
 from adv_test import evalRoboustness2 as evalRoboustness
 parser = argparse.ArgumentParser()
 parser.add_argument('--weight_decay', default=5e-4, type = float, help='weight decay (default: 5e-4)')

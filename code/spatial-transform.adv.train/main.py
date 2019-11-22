@@ -16,7 +16,7 @@ import torch.nn as nn
 import os
 from adv_train import adversairal_train_one_epoch, adversarial_val
 from collections import OrderedDict
-import torchvision.models as models
+import models
 from adv_test import evalRoboustness2 as evalRoboustness
 parser = argparse.ArgumentParser()
 parser.add_argument('--weight_decay', default=5e-4, type = float, help='weight decay (default: 5e-4)')
@@ -35,7 +35,7 @@ parser.add_argument('--adv_freq', type = int, default=1, help = 'The frequencies
 parser.add_argument('--sigma', default=0.5, type = float, help = 'inner lr for LBFGS')
 parser.add_argument('--pai', default=0.05, type = float, help = 'pai in stAdv')
 parser.add_argument('--iter', default=5, type = int, help = 'the number of iterations take to generate adversarial examples for using stAdv')
-parser.add_argument('-d', type = int, default=1, help = 'Which gpu to use')
+parser.add_argument('-d', type = int, default=0, help = 'Which gpu to use')
 #parser.add_argument('--wide', default = 2, type = int, help = 'using wider resnet18')
 args = parser.parse_args()
 
@@ -115,7 +115,7 @@ while True:
     with open(train_res_path, 'a') as f:
         json.dump(Trainresults, f)
 
-    torch.cuda.empty_cache()
+    # torch.cuda.empty_cache()
 
     #val_epoch = next(ds_val.epoch_generator())
     Valresults = adversarial_val(net, ds_val, criterion, Attackmethod, clock,
